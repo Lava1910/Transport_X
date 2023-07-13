@@ -4,7 +4,7 @@ namespace Transport_X.Requests.Order
 {
     public class OrderCreateRequest
     {
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
         public string SenderName { get; set; }
         public string SenderPhone { get; set; }
         public string SenderAddress { get; set; }
@@ -14,14 +14,18 @@ namespace Transport_X.Requests.Order
         public string Note { get; set; }
         //thu hộ
         public int Proceeds { get; set; }
-        public int ReceiverWard { get; set; }
-        public int SenderWard { get; set; }
+        public int ReceiverProvinceId { get; set; }
+        public int ReceiverWardId { get; set; }
+        public int ReceiverDistrictId { get; set; }
+        public int SenderProvinceId { get; set; }
+        public int SenderDistrictId { get; set; }
+        public int SenderWardId { get; set; }
         //loại hàng hóa
-        public string GoodsName { get; set; }
+        public int GoodsId { get; set; }
         //loại cân nặng
-        public string WeightName { get; set; }
+        public int WeightId { get; set; }
         //giá trị hàng - bảo hiểm
-        public string InsuranceName { get; set; }
+        public int InsuranceId { get; set; }
         public Guid? UserId { get; set; }
     }
 }

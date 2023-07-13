@@ -10,7 +10,7 @@ namespace Transport_X.Configurations
         {
             builder.ToTable("Goods");
 
-            builder.HasKey(x => x.GoodsName);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.GoodsName)
                 .IsRequired()

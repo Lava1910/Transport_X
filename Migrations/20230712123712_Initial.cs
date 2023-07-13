@@ -89,6 +89,8 @@ namespace Transport_X.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<bool>(type: "bit", nullable: false),
                     Dob = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -128,24 +130,28 @@ namespace Transport_X.Migrations
                 name: "Goods",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     GoodsName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Goods", x => x.GoodsName);
+                    table.PrimaryKey("PK_Goods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Insurance",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InsuranceName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Insurance", x => x.InsuranceName);
+                    table.PrimaryKey("PK_Insurance", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,24 +184,28 @@ namespace Transport_X.Migrations
                 name: "Status",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StatusName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Status", x => x.StatusName);
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Weight",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     WeightName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Weight", x => x.WeightName);
+                    table.PrimaryKey("PK_Weight", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,54 +280,64 @@ namespace Transport_X.Migrations
                     Proceeds = table.Column<int>(type: "int", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReceiveDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReceiverWard = table.Column<int>(type: "int", nullable: false),
-                    ReceiverDistrict = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReceiverProvince = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SenderWard = table.Column<int>(type: "int", nullable: false),
-                    SenderDistrict = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SenderProvince = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoodsName = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    WeightName = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    InsuranceName = table.Column<string>(type: "nvarchar(255)", nullable: true),
-                    StatusName = table.Column<string>(type: "nvarchar(255)", nullable: true),
+                    ReceiverWardId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverDistrictId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverProvinceId = table.Column<int>(type: "int", nullable: false),
+                    SenderWardId = table.Column<int>(type: "int", nullable: false),
+                    SenderDistrictId = table.Column<int>(type: "int", nullable: false),
+                    SenderProvinceId = table.Column<int>(type: "int", nullable: false),
+                    GoodsId = table.Column<int>(type: "int", nullable: false),
+                    WeightId = table.Column<int>(type: "int", nullable: false),
+                    InsuranceId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Goods_GoodsName",
-                        column: x => x.GoodsName,
+                        name: "FK_Orders_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_Goods_GoodsId",
+                        column: x => x.GoodsId,
                         principalTable: "Goods",
-                        principalColumn: "GoodsName");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Insurance_InsuranceName",
-                        column: x => x.InsuranceName,
+                        name: "FK_Orders_Insurance_InsuranceId",
+                        column: x => x.InsuranceId,
                         principalTable: "Insurance",
-                        principalColumn: "InsuranceName");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Status_StatusName",
-                        column: x => x.StatusName,
+                        name: "FK_Orders_Status_StatusId",
+                        column: x => x.StatusId,
                         principalTable: "Status",
-                        principalColumn: "StatusName");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Wards_ReceiverWard",
-                        column: x => x.ReceiverWard,
+                        name: "FK_Orders_Wards_ReceiverWardId",
+                        column: x => x.ReceiverWardId,
                         principalTable: "Wards",
                         principalColumn: "WardCode",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Weight_WeightName",
-                        column: x => x.WeightName,
+                        name: "FK_Orders_Weight_WeightId",
+                        column: x => x.WeightId,
                         principalTable: "Weight",
-                        principalColumn: "WeightName");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PostOffices",
                 columns: table => new
                 {
-                    PostOfficeId = table.Column<int>(type: "int", nullable: false),
+                    PostOfficeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PostOfficeAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WardId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -338,29 +358,34 @@ namespace Transport_X.Migrations
                 column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_GoodsName",
+                name: "IX_Orders_GoodsId",
                 table: "Orders",
-                column: "GoodsName");
+                column: "GoodsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_InsuranceName",
+                name: "IX_Orders_InsuranceId",
                 table: "Orders",
-                column: "InsuranceName");
+                column: "InsuranceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ReceiverWard",
+                name: "IX_Orders_ReceiverWardId",
                 table: "Orders",
-                column: "ReceiverWard");
+                column: "ReceiverWardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_StatusName",
+                name: "IX_Orders_StatusId",
                 table: "Orders",
-                column: "StatusName");
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_WeightName",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "WeightName");
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_WeightId",
+                table: "Orders",
+                column: "WeightId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostOffices_WardId",
@@ -397,9 +422,6 @@ namespace Transport_X.Migrations
                 name: "AppUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AppUsers");
-
-            migrationBuilder.DropTable(
                 name: "AppUserTokens");
 
             migrationBuilder.DropTable(
@@ -410,6 +432,9 @@ namespace Transport_X.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reason_fail");
+
+            migrationBuilder.DropTable(
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "Goods");

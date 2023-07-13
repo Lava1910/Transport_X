@@ -10,7 +10,7 @@ namespace Transport_X.Configurations
         {
             builder.ToTable("Insurance");
 
-            builder.HasKey(x => x.InsuranceName);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.InsuranceName)
                 .IsRequired()

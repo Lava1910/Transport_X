@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Transport_X.EF;
 
@@ -11,9 +12,11 @@ using Transport_X.EF;
 namespace Transport_X.Migrations
 {
     [DbContext(typeof(TransportXDbContext))]
-    partial class TransportXDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230712123712_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,6 +204,7 @@ namespace Transport_X.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -395,16 +399,17 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.PostOffice", b =>
                 {
-                    b.Property<int?>("PostOfficeId")
+                    b.Property<int>("PostOfficeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("PostOfficeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostOfficeId"));
 
                     b.Property<string>("PostOfficeAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WardId")
+                    b.Property<int>("WardId")
                         .HasColumnType("int");
 
                     b.HasKey("PostOfficeId");
@@ -416,11 +421,11 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.Province", b =>
                 {
-                    b.Property<int?>("ProvinceId")
+                    b.Property<int>("ProvinceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProvinceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProvinceId"));
 
                     b.Property<string>("ProvinceName")
                         .IsRequired()
@@ -428,7 +433,7 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("RegionId")
+                    b.Property<int>("RegionId")
                         .HasColumnType("int");
 
                     b.HasKey("ProvinceId");
@@ -470,6 +475,7 @@ namespace Transport_X.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -611,7 +617,9 @@ namespace Transport_X.Migrations
                 {
                     b.HasOne("Transport_X.Entities.Ward", "Ward")
                         .WithMany("PostOffices")
-                        .HasForeignKey("WardId");
+                        .HasForeignKey("WardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Ward");
                 });
@@ -620,7 +628,9 @@ namespace Transport_X.Migrations
                 {
                     b.HasOne("Transport_X.Entities.Region", "Region")
                         .WithMany("Provinces")
-                        .HasForeignKey("RegionId");
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Region");
                 });

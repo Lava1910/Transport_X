@@ -12,8 +12,8 @@ using Transport_X.EF;
 namespace Transport_X.Migrations
 {
     [DbContext(typeof(TransportXDbContext))]
-    [Migration("20230708040601_Initial")]
-    partial class Initial
+    [Migration("20230712185037_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,9 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -198,6 +201,9 @@ namespace Transport_X.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -246,7 +252,14 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.Goods", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("GoodsName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
@@ -254,14 +267,21 @@ namespace Transport_X.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("GoodsName");
+                    b.HasKey("Id");
 
                     b.ToTable("Goods", (string)null);
                 });
 
             modelBuilder.Entity("Transport_X.Entities.Insurance", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("InsuranceName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
@@ -269,7 +289,7 @@ namespace Transport_X.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("InsuranceName");
+                    b.HasKey("Id");
 
                     b.ToTable("Insurance", (string)null);
                 });
@@ -282,11 +302,11 @@ namespace Transport_X.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GoodsName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("GoodsId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("InsuranceName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("InsuranceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -306,8 +326,8 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("ReceiverDistrict")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ReceiverDistrictId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReceiverName")
                         .IsRequired()
@@ -319,10 +339,10 @@ namespace Transport_X.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReceiverProvince")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ReceiverProvinceId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ReceiverWard")
+                    b.Property<int>("ReceiverWardId")
                         .HasColumnType("int");
 
                     b.Property<string>("SenderAddress")
@@ -331,8 +351,8 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("SenderDistrict")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SenderDistrictId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SenderName")
                         .IsRequired()
@@ -344,49 +364,50 @@ namespace Transport_X.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SenderProvince")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SenderWard")
+                    b.Property<int>("SenderProvinceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StatusName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("SenderWardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("WeightName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("WeightId")
+                        .HasColumnType("int");
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("GoodsName");
+                    b.HasIndex("GoodsId");
 
-                    b.HasIndex("InsuranceName");
+                    b.HasIndex("InsuranceId");
 
-                    b.HasIndex("ReceiverWard");
+                    b.HasIndex("ReceiverWardId");
 
-                    b.HasIndex("StatusName");
+                    b.HasIndex("StatusId");
 
-                    b.HasIndex("WeightName");
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WeightId");
 
                     b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Transport_X.Entities.PostOffice", b =>
                 {
-                    b.Property<int>("PostOfficeId")
+                    b.Property<int?>("PostOfficeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostOfficeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("PostOfficeId"));
 
                     b.Property<string>("PostOfficeAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WardId")
+                    b.Property<int?>("WardId")
                         .HasColumnType("int");
 
                     b.HasKey("PostOfficeId");
@@ -398,11 +419,11 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.Province", b =>
                 {
-                    b.Property<int>("ProvinceId")
+                    b.Property<int?>("ProvinceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProvinceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ProvinceId"));
 
                     b.Property<string>("ProvinceName")
                         .IsRequired()
@@ -410,7 +431,7 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("RegionId")
+                    b.Property<int?>("RegionId")
                         .HasColumnType("int");
 
                     b.HasKey("ProvinceId");
@@ -452,7 +473,6 @@ namespace Transport_X.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -462,9 +482,11 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.Status", b =>
                 {
-                    b.Property<string>("StatusName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -472,7 +494,12 @@ namespace Transport_X.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("StatusName");
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Status", (string)null);
                 });
@@ -503,15 +530,22 @@ namespace Transport_X.Migrations
 
             modelBuilder.Entity("Transport_X.Entities.Weight", b =>
                 {
-                    b.Property<string>("WeightName")
-                        .HasMaxLength(255)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("WeightName");
+                    b.Property<string>("WeightName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Weight", (string)null);
                 });
@@ -531,25 +565,39 @@ namespace Transport_X.Migrations
                 {
                     b.HasOne("Transport_X.Entities.Goods", "Goods")
                         .WithMany("Orders")
-                        .HasForeignKey("GoodsName");
+                        .HasForeignKey("GoodsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Transport_X.Entities.Insurance", "Insurance")
                         .WithMany("Orders")
-                        .HasForeignKey("InsuranceName");
+                        .HasForeignKey("InsuranceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Transport_X.Entities.Ward", "Ward")
                         .WithMany("Orders")
-                        .HasForeignKey("ReceiverWard")
+                        .HasForeignKey("ReceiverWardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Transport_X.Entities.Status", "Status")
                         .WithMany("Orders")
-                        .HasForeignKey("StatusName");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Transport_X.Entities.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
 
                     b.HasOne("Transport_X.Entities.Weight", "Weight")
                         .WithMany("Orders")
-                        .HasForeignKey("WeightName");
+                        .HasForeignKey("WeightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Goods");
 
@@ -566,9 +614,7 @@ namespace Transport_X.Migrations
                 {
                     b.HasOne("Transport_X.Entities.Ward", "Ward")
                         .WithMany("PostOffices")
-                        .HasForeignKey("WardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WardId");
 
                     b.Navigation("Ward");
                 });
@@ -577,9 +623,7 @@ namespace Transport_X.Migrations
                 {
                     b.HasOne("Transport_X.Entities.Region", "Region")
                         .WithMany("Provinces")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RegionId");
 
                     b.Navigation("Region");
                 });
@@ -593,6 +637,11 @@ namespace Transport_X.Migrations
                         .IsRequired();
 
                     b.Navigation("District");
+                });
+
+            modelBuilder.Entity("Transport_X.Entities.AppUser", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Transport_X.Entities.District", b =>

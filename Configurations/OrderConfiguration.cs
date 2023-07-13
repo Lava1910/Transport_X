@@ -34,12 +34,12 @@ namespace Transport_X.Configurations
                 .IsRequired()
                 .IsUnicode()
                 .HasMaxLength(255);
-            builder.HasOne(x => x.Ward).WithMany(x => x.Orders).HasForeignKey(x => x.SenderWard);
-            builder.HasOne(x => x.Ward).WithMany(x => x.Orders).HasForeignKey(x => x.ReceiverWard);
-            builder.HasOne(x => x.Goods).WithMany(x => x.Orders).HasForeignKey(x => x.GoodsName);
-            builder.HasOne(x => x.Weight).WithMany(x => x.Orders).HasForeignKey(x => x.WeightName);
-            builder.HasOne(x => x.Insurance).WithMany(x => x.Orders).HasForeignKey(x => x.InsuranceName);
-            builder.HasOne(x => x.Status).WithMany(x => x.Orders).HasForeignKey(x => x.StatusName);
+            builder.HasOne(x => x.Ward).WithMany(x => x.Orders).HasForeignKey(x => x.SenderWardId);
+            builder.HasOne(x => x.Ward).WithMany(x => x.Orders).HasForeignKey(x => x.ReceiverWardId);
+            builder.HasOne(x => x.Goods).WithMany(x => x.Orders).HasForeignKey(x => x.GoodsId);
+            builder.HasOne(x => x.Weight).WithMany(x => x.Orders).HasForeignKey(x => x.WeightId);
+            builder.HasOne(x => x.Insurance).WithMany(x => x.Orders).HasForeignKey(x => x.InsuranceId);
+            builder.HasOne(x => x.Status).WithMany(x => x.Orders).HasForeignKey(x => x.StatusId);
             builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
         }
     }

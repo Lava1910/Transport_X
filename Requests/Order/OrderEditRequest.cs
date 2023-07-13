@@ -17,10 +17,10 @@ namespace Transport_X.Requests.Order
         public int ReceiverWard { get; set; }
         public int SenderWard { get; set; }
         //loại hàng hóa
-        public string GoodsName { get; set; }
+        public int GoodsId { get; set; }
         //loại cân nặng
-        public string WeightName { get; set; }
+        public int WeightId { get; set; }
         //giá trị hàng - bảo hiểm
-        public string InsuranceName { get; set; }
+        public int InsuranceId { get; set; }
     }
 }

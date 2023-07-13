@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using Transport_X.Interfaces;
 using Transport_X.Requests.Order;
+using Transport_X.Services;
 
 namespace Transport_X.Controllers
 {
@@ -10,7 +11,7 @@ namespace Transport_X.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        public readonly IOrderService _orderService;
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
@@ -18,15 +19,15 @@ namespace Transport_X.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] OrderCreateRequest request)
         {
-            var OrderId = await _orderService.Create(request);
-            return Ok(OrderId);
+            //var orderId = await _orderService.Create(request);
+            return Ok();
         }
 
-        [HttpGet("GetOrderListByUserId/{userId}")]
-        public async Task<IActionResult> GetOrderListByUserId(Guid userId)
-        {
-            var list = await _orderService.GetOrderListByUserId(userId);
-            return Ok(list);
-        }
+    //    [HttpGet("GetOrderListByUserId/{userId}")]
+    //    public async Task<IActionResult> GetOrderListByUserId(Guid userId)
+    //    {
+    //        var list = await _orderService.GetOrderListByUserId(userId);
+    //        return Ok(list);
+    //    }
     }
 }

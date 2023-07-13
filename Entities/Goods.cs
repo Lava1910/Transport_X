@@ -2,8 +2,10 @@
 {
     public class Goods
     {
-        public string GoodsName { get; set; }
+
+        public int Id { get; set; }
+        public string? GoodsName { get; set; }
         public decimal Price { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Order>? Orders { get; set; }
     }
 }
