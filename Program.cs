@@ -8,8 +8,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Transport_X.Entities;
-using Transport_X.Interfaces;
-using Transport_X.Services;
 using System.IO;
 using System.Threading.Tasks;
 

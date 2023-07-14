@@ -8,14 +8,14 @@
 //using System.Text;
 //using Transport_X.EF;
 //using Transport_X.Entities;
-//using Transport_X.Interfaces;
+
 //using Transport_X.Requests;
 //using Transport_X.Requests.User;
 //using Transport_X.ViewModel;
 
 //namespace Transport_X.Services
 //{
-//    public class UserService : IUserService
+//    public class UserService 
 //    {
 //        private readonly UserManager<AppUser> _userManager;
 //        private readonly SignInManager<AppUser> _signInManager;
@@ -25,7 +25,7 @@
 //        private readonly EmailConfiguration _emailConfiguration;
 //        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
 //            RoleManager<AppRole> roleManager, IConfiguration config, TransportXDbContext context, EmailConfiguration emailConfiguration)
-//        { 
+//        {
 //            _userManager = userManager;
 //            _signInManager = signInManager;
 //            _roleManager = roleManager;
@@ -41,7 +41,7 @@
 //                return null;
 //            }
 //            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
-//            if(!result.Succeeded)
+//            if (!result.Succeeded)
 //            {
 //                return null;
 //            }
@@ -107,13 +107,14 @@
 //        public async Task<Guid> Update(UserUpdateRequest request)
 //        {
 //            var updateUser = await _context.Users.FirstOrDefaultAsync(p => p.Id == request.Id);
-//            if(updateUser == null) {
+//            if (updateUser == null)
+//            {
 //                return Guid.Empty;
 //            }
 //            else
 //            {
 //                updateUser.FirstName = request.FirstName;
-//                updateUser.LastName = request.LastName;   
+//                updateUser.LastName = request.LastName;
 //                updateUser.Gender = request.Gender;
 //                updateUser.Phone = request.Phone;
 //                updateUser.Dob = request.DoB;
@@ -131,10 +132,10 @@
 //                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 //                var passwordResetLink = string.Format("https://localhost:3000/ResetPassword?token={0}&email={1}", token, request.Email);
 //                var emailMessage = new MimeMessage();
-//                emailMessage.From.Add(new MailboxAddress(_emailConfiguration.From,string.Empty));
+//                emailMessage.From.Add(new MailboxAddress(_emailConfiguration.From, string.Empty));
 //                //var to = new List<MailboxAddress>();
 
-//                emailMessage.To.Add(new MailboxAddress(request.Email,string.Empty));
+//                emailMessage.To.Add(new MailboxAddress(request.Email, string.Empty));
 //                emailMessage.Subject = "RESET PASSWORD";
 
 

@@ -4,7 +4,6 @@ namespace Transport_X.Requests.Order
 {
     public class OrderCreateRequest
     {
-        public string OrderId { get; set; }
         public string SenderName { get; set; }
         public string SenderPhone { get; set; }
         public string SenderAddress { get; set; }

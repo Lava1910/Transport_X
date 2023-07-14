@@ -32,31 +32,31 @@ namespace Transport_X.Controllers
             return Ok(ward);
         }
 
-        [HttpPost]
-        public IActionResult Create(Ward ward)
-        {
-            _context.Wards.Add(ward);
-            _context.SaveChanges();
-            return Created($"/get-by-id?id={ward.WardCode}", ward);
-        }
+        //[HttpPost]
+        //public IActionResult Create(Ward ward)
+        //{
+        //    _context.Wards.Add(ward);
+        //    _context.SaveChanges();
+        //    return Created($"/get-by-id?id={ward.WardCode}", ward);
+        //}
 
-        [HttpPut]
-        public IActionResult Update(Ward ward)
-        {
-            _context.Wards.Update(ward);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //[HttpPut]
+        //public IActionResult Update(Ward ward)
+        //{
+        //    _context.Wards.Update(ward);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
 
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            var wardDelete = _context.Wards.Find(id);
-            if (wardDelete == null)
-                return NotFound();
-            _context.Wards.Remove(wardDelete);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //[HttpDelete]
+        //public IActionResult Delete(int id)
+        //{
+        //    var wardDelete = _context.Wards.Find(id);
+        //    if (wardDelete == null)
+        //        return NotFound();
+        //    _context.Wards.Remove(wardDelete);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
     }
 }

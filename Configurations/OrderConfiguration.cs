@@ -40,7 +40,7 @@ namespace Transport_X.Configurations
             builder.HasOne(x => x.Weight).WithMany(x => x.Orders).HasForeignKey(x => x.WeightId);
             builder.HasOne(x => x.Insurance).WithMany(x => x.Orders).HasForeignKey(x => x.InsuranceId);
             builder.HasOne(x => x.Status).WithMany(x => x.Orders).HasForeignKey(x => x.StatusId);
-            builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+            builder.HasOne(x => x.User).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
         }
     }
 }

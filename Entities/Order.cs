@@ -2,7 +2,7 @@
 {
     public class Order
     {
-        public string? OrderId { get; set; }
+        public Guid? OrderId { get; set; }
         public string? SenderName { get; set; }
         public string? SenderPhone { get; set; }
         public string? SenderAddress { get; set; }
@@ -26,7 +26,7 @@
         public int StatusId { get; set; }
         public Guid? UserId { get; set; }
 
-        public AppUser? AppUser { get; set; }
+        public User? User { get; set; }
         public Ward? Ward { get; set; }
         public Goods? Goods { get; set; }
         public Weight? Weight { get; set; }  

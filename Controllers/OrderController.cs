@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using System;
-using Transport_X.Interfaces;
+using Transport_X.EF;
+using Transport_X.Entities;
 using Transport_X.Requests.Order;
-using Transport_X.Services;
+
 
 namespace Transport_X.Controllers
 {
@@ -11,23 +10,53 @@ namespace Transport_X.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        public readonly IOrderService _orderService;
-        public OrderController(IOrderService orderService)
+        public readonly TransportXDbContext _context;
+        public OrderController(TransportXDbContext context)
         {
-            _orderService = orderService;
+            _context = context;
         }
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] OrderCreateRequest request)
         {
-            //var orderId = await _orderService.Create(request);
+            _context.Orders.Add(new Order
+            {
+                SenderName = request.SenderName,
+                SenderPhone = request.SenderPhone,
+                SenderAddress = request.SenderAddress,
+                SenderProvinceId = request.SenderProvinceId,
+                SenderDistrictId = request.SenderDistrictId,
+                SenderWardId = request.SenderWardId,
+                DeliveryDate = DateTime.Now.AddDays(1),
+                Note = request.Note,
+                Proceeds = request.Proceeds,
+                ReceiverName = request.ReceiverName,
+                ReceiverPhone = request.ReceiverPhone,
+                ReceiverAddress = request.ReceiverAddress,
+                ReceiverWardId = request.ReceiverWardId,
+                ReceiverDistrictId = request.ReceiverDistrictId,
+                ReceiverProvinceId = request.ReceiverProvinceId,
+                ReceiveDate = DateTime.Now.AddDays(5),
+                GoodsId = request.GoodsId,
+                WeightId = request.WeightId,
+                InsuranceId = request.InsuranceId,
+                StatusId = _context.Status.First().Id,
+                UserId = request.UserId
+            });
+            await _context.SaveChangesAsync();
             return Ok();
         }
 
-    //    [HttpGet("GetOrderListByUserId/{userId}")]
-    //    public async Task<IActionResult> GetOrderListByUserId(Guid userId)
-    //    {
-    //        var list = await _orderService.GetOrderListByUserId(userId);
-    //        return Ok(list);
-    //    }
+        [HttpGet("get-by-userId")]
+        public IActionResult GetOrderListByUserId(Guid userId)
+        {
+            var orders =  _context.Orders.Where(e => e.UserId == userId);
+            if(orders == null)
+            {
+                return BadRequest();
+            } else
+            {
+                return Ok(orders);
+            }
+        }
     }
 }

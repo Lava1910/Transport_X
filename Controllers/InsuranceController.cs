@@ -22,41 +22,41 @@ namespace Transport_X.Controllers
             return Ok(insurance);
         }
 
-        [HttpGet]
-        [Route("get-by-id")]
-        public IActionResult Get(int Id)
-        {
-            var insurance = _context.Insurance.Find(Id);
-            if (insurance == null)
-                return NotFound();
-            return Ok(insurance);
-        }
+        //[HttpGet]
+        //[Route("get-by-id")]
+        //public IActionResult Get(int Id)
+        //{
+        //    var insurance = _context.Insurance.Find(Id);
+        //    if (insurance == null)
+        //        return NotFound();
+        //    return Ok(insurance);
+        //}
 
-        [HttpPost]
-        public IActionResult Create(Insurance insurance)
-        {
-            _context.Insurance.Add(insurance);
-            _context.SaveChanges();
-            return Created($"/get-by-id?id={insurance.Id}", insurance);
-        }
+        //[HttpPost]
+        //public IActionResult Create(Insurance insurance)
+        //{
+        //    _context.Insurance.Add(insurance);
+        //    _context.SaveChanges();
+        //    return Created($"/get-by-id?id={insurance.Id}", insurance);
+        //}
 
-        [HttpPut]
-        public IActionResult Update(Insurance insurance)
-        {
-            _context.Insurance.Update(insurance);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //[HttpPut]
+        //public IActionResult Update(Insurance insurance)
+        //{
+        //    _context.Insurance.Update(insurance);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
 
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            var insuranceDelete = _context.Insurance.Find(id);
-            if (insuranceDelete == null)
-                return NotFound();
-            _context.Insurance.Remove(insuranceDelete);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //[HttpDelete]
+        //public IActionResult Delete(int id)
+        //{
+        //    var insuranceDelete = _context.Insurance.Find(id);
+        //    if (insuranceDelete == null)
+        //        return NotFound();
+        //    _context.Insurance.Remove(insuranceDelete);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
     }
 }
