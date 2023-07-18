@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Transport_X.EF;
 using Transport_X.Entities;
 using Transport_X.Requests.Order;
@@ -18,7 +19,7 @@ namespace Transport_X.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] OrderCreateRequest request)
         {
-            _context.Orders.Add(new Order
+            var order = _context.Orders.Add(new Order
             {
                 SenderName = request.SenderName,
                 SenderPhone = request.SenderPhone,
@@ -43,7 +44,7 @@ namespace Transport_X.Controllers
                 UserId = request.UserId
             });
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(order);
         }
 
         [HttpGet("get-by-userId")]
@@ -58,5 +59,10 @@ namespace Transport_X.Controllers
                 return Ok(orders);
             }
         }
+        
+        //public IActionResult SearchOrderByDate(Guid orderId,Date time) { }
+
+
+       
     }
 }
